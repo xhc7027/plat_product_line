@@ -11,7 +11,7 @@ class Index extends Controller
     public function index()
     {
 
-        $this->redirect('http://detect-clouds.huishoubao.com.cn/index.html');
+        $this->redirect('http://product-line.huishoubao.com.cn/index.html#/');
 
     }
 

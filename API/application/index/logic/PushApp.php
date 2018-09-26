@@ -79,4 +79,15 @@ class PushApp extends BaseLogic
 
         return $res;
     }
+
+    public function getDetectRecord($params)
+    {
+        $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "PushEngineerDetectResult";
+
+        $res = $this->InvokingServerApi($interface, $params);
+
+        $res = $res['_data'];
+
+        return $res;
+    }
 }

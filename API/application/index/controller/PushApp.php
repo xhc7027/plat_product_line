@@ -9,10 +9,10 @@
 namespace app\index\controller;
 
 
-
 use app\common\controller\BaseController;
 use app\common\lib\ErrorCode;
 use think\Request;
+
 class PushApp extends BaseController
 {
     private $logic = null;
@@ -86,11 +86,10 @@ class PushApp extends BaseController
         if (!$validate->scene('bindDetectBarCode')->check($params)) {
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
-        $result = $this->logic-> bindDetectBarCode($params);
+        $result = $this->logic->bindDetectBarCode($params);
 
         \ResponseHelper::apiSuccess('操作成功', $result);
     }
-
 
 
     /**
@@ -104,7 +103,23 @@ class PushApp extends BaseController
         if (!$validate->scene('getQuotation')->check($params)) {
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
-        $result = $this->logic-> getQuotation($params);
+        $result = $this->logic->getQuotation($params);
+
+        \ResponseHelper::apiSuccess('操作成功', $result);
+    }
+
+    /**
+     *
+     */
+    public function getDetectRecord()
+    {
+        $params = $this->data['_param'];
+
+        $validate = new \app\index\validate\PushApp();
+        if (!$validate->scene('getDetectRecord')->check($params)) {
+            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
+        }
+        $result = $this->logic->getDetectRecord($params);
 
         \ResponseHelper::apiSuccess('操作成功', $result);
     }
