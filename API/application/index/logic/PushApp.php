@@ -20,6 +20,10 @@ use think\Env;
 class PushApp extends BaseLogic
 {
 
+    /**
+     * @param $params
+     * @return array|mixed
+     */
     public function test($params)
     {
         $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "Test";
@@ -32,8 +36,8 @@ class PushApp extends BaseLogic
     }
 
     /**
-     *
-     *
+     * @param $params
+     * @return array|mixed
      */
     public function saveIMEI($params)
     {
@@ -46,6 +50,10 @@ class PushApp extends BaseLogic
         return $res;
     }
 
+    /**
+     * @param $params
+     * @return array|mixed
+     */
     public function saveAppDetectResult($params)
     {
         $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "ProductCheckItem";
@@ -58,6 +66,10 @@ class PushApp extends BaseLogic
     }
 
 
+    /**
+     * @param $params
+     * @return array|mixed
+     */
     public function bindDetectBarCode($params)
     {
         $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "GetProfessionDetect";
@@ -69,6 +81,10 @@ class PushApp extends BaseLogic
         return $res;
     }
 
+    /**
+     * @param $params
+     * @return array|mixed
+     */
     public function getQuotation($params)
     {
         $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "PushEngineerDetectResult";
@@ -80,6 +96,10 @@ class PushApp extends BaseLogic
         return $res;
     }
 
+    /**
+     * @param $params
+     * @return array|mixed
+     */
     public function getDetectRecord($params)
     {
         $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "PushEngineerDetectResult";
@@ -90,4 +110,20 @@ class PushApp extends BaseLogic
 
         return $res;
     }
+
+    /**
+     * @param $params
+     * @return array|mixed
+     */
+    public function getUniqueKey($params)
+    {
+        $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "getUniqueKey";
+
+        $res = $this->InvokingServerApi($interface, $params);
+
+        $res = $res['_data'];
+
+        return $res;
+    }
+
 }

@@ -12,6 +12,8 @@ namespace app\index\controller;
 use app\common\controller\BaseController;
 use app\common\lib\ErrorCode;
 use think\Request;
+use app\common\exceptions\SystemException;
+use app\common\exceptions\RequestException;
 
 class PushApp extends BaseController
 {
@@ -104,6 +106,32 @@ class PushApp extends BaseController
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
         $result = $this->logic->getQuotation($params);
+
+        \ResponseHelper::apiSuccess('操作成功', $result);
+    }
+
+    /**
+     * 返回app需要的唯一key
+     */
+    public function getUniqueKey()
+    {
+        $params = $this->data['_param'];
+
+        $validate = new \app\index\validate\PushApp();
+        try {
+            $time = \JwtHelper::decode($params['token']);
+            if ($time <= date('Y-m-d H:i:s','-1 day')) {
+                \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, '超过时间，请重新提交检测');
+            }
+        } catch (SystemException $e) {
+            hsb_write_error('APP获取唯一验证Key错误' . $e->getMessage());
+            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $e->getMessage());
+        }
+
+        if (!$validate->scene('getUniqueKey')->check($params)) {
+            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
+        }
+        $result = $this->logic->getUniqueKey($params);
 
         \ResponseHelper::apiSuccess('操作成功', $result);
     }

@@ -24,7 +24,7 @@ class BaseLogic
 
         if (!$res) {
             \LogHelper::errorRecord("获取服务层接口失败: [API] : " . Env::get('app.HSB_PRODUCT_SERVER_API_URL') . " [PARAM] : " . $paramJson . " [HEAD] : " . json_encode($head));
-            \ResponseHelper::apiFail(ErrorCode::CGI_REQUEST_ERROR, '获取服务层接口失败!');
+            \ResponseHelper::apiFail(ErrorCode::CGI_REQUEST_ERROR, '获取服务层接口失败!'.json_encode($res));
         }
 
         if (isset($res['_data']) && '0' === $res['_data']['_ret']) {
