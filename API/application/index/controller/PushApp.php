@@ -148,8 +148,9 @@ class PushApp extends BaseController
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
         $result = $this->logic->getDetectRecord($params);
-
-        \ResponseHelper::apiSuccess('操作成功', $result);
+        $url = config('params.xy_detect_api');
+        $return = curlByPost($url,$result);
+        \ResponseHelper::apiSuccess('操作成功', $return);
     }
 
 }
