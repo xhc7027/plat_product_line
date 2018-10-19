@@ -66,6 +66,7 @@ class PushApp extends BaseLogic
     }
 
 
+
     /**
      * @param $params
      * @return array|mixed
@@ -81,6 +82,22 @@ class PushApp extends BaseLogic
         return $res;
     }
 
+
+    /**
+     * @param $params
+     * @return array|mixed
+     */
+    public function bindXyDetectBarCode($params)
+    {
+        $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "GetProfessionXyDetect";
+
+        $res = $this->InvokingServerApi($interface, $params);
+
+        $res = $res['_data'];
+
+        return $res;
+    }
+
     /**
      * @param $params
      * @return array|mixed
@@ -88,6 +105,22 @@ class PushApp extends BaseLogic
     public function getQuotation($params)
     {
         $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "PushEngineerDetectResult";
+
+        $res = $this->InvokingServerApi($interface, $params);
+
+        $res = $res['_data'];
+
+        return $res;
+    }
+
+
+    /**
+     * @param $params
+     * @return array|mixed
+     */
+    public function pullAppDetectToXyDetect($params)
+    {
+        $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "PushXyEngineerDetectResult";
 
         $res = $this->InvokingServerApi($interface, $params);
 

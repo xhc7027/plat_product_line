@@ -77,6 +77,7 @@ class PushApp extends BaseController
     }
 
 
+
     /**
      * 获取App传来的条形码，并将条码和存储key进行绑定
      */
@@ -89,6 +90,22 @@ class PushApp extends BaseController
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
         $result = $this->logic->bindDetectBarCode($params);
+
+        \ResponseHelper::apiSuccess('操作成功', $result);
+    }
+
+    /**
+     * 获取App传来的条形码，并将条码和存储key进行绑定
+     */
+    public function bindXyDetectBarCode()
+    {
+        $params = $this->data['_param'];
+
+        $validate = new \app\index\validate\PushApp();
+        if (!$validate->scene('bindDetectBarCode')->check($params)) {
+            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
+        }
+        $result = $this->logic->bindXyDetectBarCode($params);
 
         \ResponseHelper::apiSuccess('操作成功', $result);
     }
@@ -106,8 +123,28 @@ class PushApp extends BaseController
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
         $result = $this->logic->getQuotation($params);
-
         \ResponseHelper::apiSuccess('操作成功', $result);
+    }
+
+
+    /**
+     * 根据用户选项返回查询结果
+     */
+    public function pullAppDetectToXyDetect()
+    {
+        $params = $this->data['_param'];
+
+        $validate = new \app\index\validate\PushApp();
+        if (!$validate->scene('getQuotation')->check($params)) {
+            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
+        }
+        $result = $this->logic->pullAppDetectToXyDetect($params);
+        $url = config('params.xy_detect_api');
+        $return = curlByPost($url.'api/addDetRecord',$result);
+        var_dump($url);
+        var_dump($result);
+        var_dump($return);die;
+        \ResponseHelper::apiSuccess('操作成功', $return);
     }
 
     /**
