@@ -141,10 +141,10 @@ class PushApp extends BaseController
         $result = $this->logic->pullAppDetectToXyDetect($params);
         $url = config('params.xy_detect_api');
         $return = curlByPost($url.'api/addDetRecord',$result);
-        var_dump($url);
-        var_dump($result);
-        var_dump($return);die;
-        \ResponseHelper::apiSuccess('操作成功', $return);
+        if($return['_data']['_ret'] !== "0"){
+            \ResponseHelper::apiFail('推送到闲鱼检测系统失败', $return);
+        }
+        \ResponseHelper::apiSuccess('推送到闲鱼检测系统成功', $return);
     }
 
     /**

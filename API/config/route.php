@@ -12,9 +12,7 @@ return [
     'pushApp/test' => 'index/pushApp/test',
     'pushApp/saveAppDetectResult' => 'index/pushApp/saveAppDetectResult',
     'pushApp/bindDetectBarCode' => 'index/pushApp/bindDetectBarCode',
-    'pushApp/bindDetectBarCode' => 'index/pushApp/bindXyDetectBarCode',
+    'pushApp/bindXyDetectBarCode' => 'index/pushApp/bindXyDetectBarCode',
     'pushApp/getQuotation' => 'index/pushApp/getQuotation',
-    'pushApp/getQuotation' => 'index/pushApp/pullAppDetectToXyDetect',
-
-
+    'pushApp/pullAppDetectToXyDetect' => 'index/pushApp/pullAppDetectToXyDetect',
 ];
