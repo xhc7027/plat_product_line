@@ -5,7 +5,8 @@ namespace app\common\controller;
 use think\Request;
 use think\Controller;
 use think\exception\HttpException;
-//use app\common\lib\ErrorCode;
+use app\common\lib\Code;
+use app\common\lib\ErrorCode;
 
 class BaseController extends CommonController
 {
@@ -33,7 +34,27 @@ class BaseController extends CommonController
 //            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate);
 //        }
 
-        // 数据验证
+        $this->checkLogin();
     }
+
+
+    /**
+     * 验证登录token
+     */
+    protected function checkLogin()
+    {
+        $data = [
+            'login_token'     => $this->params['_param']['login_token'],
+            'login_user_id'   => $this->params['_param']['user_id'],
+            'login_system_id' => '48',
+        ];
+        $params = rpcParamsArr('checklogin', $data);
+
+        $result = curlByPost(config('params.check_login'), $params);
+        if (0 != $result['body']['ret']) {
+            throw new HttpException(Code::LOGIN_ERROR, $result['body']['retinfo']);
+        }
+    }
+
 
 }

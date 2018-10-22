@@ -43,6 +43,26 @@ class PushApp extends BaseController
     }
 
     /**
+     * 获取用户信息
+     *
+     * @return mixed
+     */
+    public function getLoginUserInfo()
+    {
+        $params = $this->params;
+        $data = [
+            'login_token'     => $params['_param']['login_token'],
+            'login_user_id'   => $params['_param']['user_id'],
+            'type'            => $params['_param']['type'],
+            'login_system_id' => '48'
+        ];
+
+        $result = curlByPost(config('params.login_user_info'), rpcParamsArr('loginuserinfo', $data));
+
+        return rpcResult($result['body']['ret'], $result['body']['retinfo'], $result['body']['data']);
+    }
+
+    /**
      * 将App传入的IMEI码进行保存
      *
      */

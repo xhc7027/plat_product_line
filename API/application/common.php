@@ -11,12 +11,24 @@
 
 // 应用公共文件
 
-if(!function_exists('ltrim4')){
-    function ltrim4(&$val, $key, $trim='') {
+if (!function_exists('ltrim4')) {
+    function ltrim4(&$val, $key, $trim = '')
+    {
         $val = ltrim($val, $trim);
     }
 }
 
+
+/**
+ *
+ *
+ * @param $url
+ * @param string $post_data
+ * @param string $cookie
+ * @param bool $is_json
+ * @param array $header
+ * @return array|mixed
+ */
 function curlByPost($url, $post_data = '', $cookie = '', $is_json = true, $header = [])
 {
     $curl = curl_init();
@@ -67,3 +79,75 @@ function curlByPost($url, $post_data = '', $cookie = '', $is_json = true, $heade
     return json_decode($result_data, true);
 }
 
+
+/**
+ * 重组数组
+ *
+ * @param $interface
+ * @param $params
+ * @return array
+ */
+function rpcParamsArr($interface, $params)
+{
+    return [
+        'head' => [
+            'interface' => $interface,
+            'msgtype' => 'request',
+            'remark' => '',
+            'version' => '0.01',
+        ],
+        'params' => $params
+    ];
+}
+
+
+/**
+ * 接口请求失败返回数据
+ */
+function rpcResult($code = 0, $msg = '', $data = [])
+{
+    $result = [
+        '_head' => [
+            "_version" => "0.01",
+            "_msgType" => "response",
+            "_timestamps" => time(),
+            "_interface" => isset(request()->post()['_head']['_interface']) ? request()->post()['_head']['_interface'] : '',
+            "_remark" => ""
+        ],
+        '_data' => [
+            '_data' => $data,
+            '_ret' => $code == 0 ? 0 : 1,
+            '_errCode' => $code,
+            '_errStr' => (string)$msg,
+        ]
+    ];
+    arrayIntToString($result);
+
+    return jsonReturn($result);
+}
+
+
+/**
+ * 数组元素中的int 强制转换为string类型
+ */
+function arrayIntToString(&$arr)
+{
+    array_walk_recursive($arr, function (&$item) {
+        if ((is_numeric($item) || !$item) && $item != false) {
+            $item = (string)$item;
+        }
+    });
+}
+
+/**
+ * json格式返回
+ *
+ * @param $result
+ * @return \think\response\Json
+ */
+function jsonReturn($result)
+{
+    $origin = '*';
+    $header = ['Access-Control-Allow-Headers' => 'x-requested-with,content-type', 'Access-Control-Allow-Origin' => $origin];
+    return json($result, 200, $header);
+}
