@@ -47,7 +47,7 @@ class BaseController extends CommonController
         $data = [
             'login_token'     => $params['login_token'],
             'login_user_id'   => $params['login_user_id'],
-            'login_system_id' => '114',
+            'login_system_id' => '51',
         ];
         $params = rpcParamsArr('checklogin', $data);
 

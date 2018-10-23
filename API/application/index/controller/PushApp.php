@@ -56,7 +56,7 @@ class PushApp extends BaseController
             'login_token'     => $params['login_token'],
             'login_user_id'   => $params['login_user_id'],
             'type'            => $params['_param']['type'],
-            'system_id' => '114'
+            'system_id' => '51'
         ];
 
         $result = curlByPost(config('params.login_user_info'), rpcParamsArr('loginuserinfo', $data));
@@ -228,7 +228,7 @@ class PushApp extends BaseController
         $data = [
             'login_token'     => $params['login_token'],
             'login_user_id'   => $params['login_user_id'],
-            'login_system_id' => '114',
+            'login_system_id' => '51',
         ];
         $params = rpcParamsArr('checklogin', $data);
 
