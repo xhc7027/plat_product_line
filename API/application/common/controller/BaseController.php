@@ -34,7 +34,7 @@ class BaseController extends CommonController
 //            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate);
 //        }
 
-        $this->checkLogin();
+        //$this->checkLogin();
     }
 
 
@@ -43,10 +43,11 @@ class BaseController extends CommonController
      */
     protected function checkLogin()
     {
+        $params = $this->data['_param'];
         $data = [
-            'login_token'     => $this->params['_param']['login_token'],
-            'login_user_id'   => $this->params['_param']['user_id'],
-            'login_system_id' => '48',
+            'login_token'     => $params['login_token'],
+            'login_user_id'   => $params['login_user_id'],
+            'login_system_id' => '114',
         ];
         $params = rpcParamsArr('checklogin', $data);
 

@@ -11,6 +11,7 @@ namespace app\index\controller;
 
 use app\common\controller\BaseController;
 use app\common\lib\ErrorCode;
+use app\common\lib\Code;
 use think\Request;
 use app\common\exceptions\SystemException;
 use app\common\exceptions\RequestException;
@@ -49,12 +50,13 @@ class PushApp extends BaseController
      */
     public function getLoginUserInfo()
     {
-        $params = $this->params;
+        $params = $this->data['_param'];
+        $this -> checkLogin();
         $data = [
-            'login_token'     => $params['_param']['login_token'],
-            'login_user_id'   => $params['_param']['user_id'],
+            'login_token'     => $params['login_token'],
+            'login_user_id'   => $params['login_user_id'],
             'type'            => $params['_param']['type'],
-            'login_system_id' => '48'
+            'system_id' => '114'
         ];
 
         $result = curlByPost(config('params.login_user_info'), rpcParamsArr('loginuserinfo', $data));
@@ -109,6 +111,7 @@ class PushApp extends BaseController
         if (!$validate->scene('bindDetectBarCode')->check($params)) {
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
+        $this -> checkLogin();
         $result = $this->logic->bindDetectBarCode($params);
 
         \ResponseHelper::apiSuccess('操作成功', $result);
@@ -125,6 +128,7 @@ class PushApp extends BaseController
         if (!$validate->scene('bindDetectBarCode')->check($params)) {
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
+        $this -> checkLogin();
         $result = $this->logic->bindXyDetectBarCode($params);
 
         \ResponseHelper::apiSuccess('操作成功', $result);
@@ -142,6 +146,7 @@ class PushApp extends BaseController
         if (!$validate->scene('getQuotation')->check($params)) {
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
+        $this -> checkLogin();
         $result = $this->logic->getQuotation($params);
         \ResponseHelper::apiSuccess('操作成功', $result);
     }
@@ -158,11 +163,12 @@ class PushApp extends BaseController
         if (!$validate->scene('getQuotation')->check($params)) {
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
+        $this -> checkLogin();
         $result = $this->logic->pullAppDetectToXyDetect($params);
         $url = config('params.xy_detect_api');
         $return = curlByPost($url.'api/addDetRecord',$result);
-        if($return['_data']['_ret'] !== "0"){
-            \ResponseHelper::apiFail('推送到闲鱼检测系统失败', $return);
+        if($return['_data']['_ret'] != 0){
+            \ResponseHelper::apiFail('推送到闲鱼检测系统失败，请联系管理员', json_encode($return));
         }
         \ResponseHelper::apiSuccess('推送到闲鱼检测系统成功', $return);
     }
@@ -208,6 +214,28 @@ class PushApp extends BaseController
         $url = config('params.xy_detect_api');
         $return = curlByPost($url,$result);
         \ResponseHelper::apiSuccess('操作成功', $return);
+    }
+
+    /**
+     * 验证登录token
+     */
+    protected function checkLogin()
+    {
+        $params = $this->data['_param'];
+        if(!isset($params['login_token']) || !isset($params['login_user_id'])){
+            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, '所传数据没有token和user_id');
+        }
+        $data = [
+            'login_token'     => $params['login_token'],
+            'login_user_id'   => $params['login_user_id'],
+            'login_system_id' => '114',
+        ];
+        $params = rpcParamsArr('checklogin', $data);
+
+        $result = curlByPost(config('params.check_login'), $params);
+        if (0 != $result['body']['ret']) {
+            \ResponseHelper::apiFail(Code::LOGIN_ERROR, $result['body']['retinfo']);
+        }
     }
 
 }
