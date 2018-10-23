@@ -25,6 +25,6 @@ define('APP_PATH', __DIR__ . '/../application/');
 // 定义配置文件目录和应用目录同级
 define('CONF_PATH', __DIR__.'/../config/');
 // 定义模块
-//define('HSB_SYS', 'detect_clouds_sys');
+define('HSB_SYS', 'plat_product_line');
 // 加载框架引导文件 //require __DIR__ . '/../thinkphp/start.php';
 require __DIR__ . '/../../../thinkphp/start.php'; // 引用 回收宝 thinkphp_core 文件
