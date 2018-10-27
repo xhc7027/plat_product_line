@@ -15,4 +15,5 @@ return [
     'pushApp/bindXyDetectBarCode' => 'index/pushApp/bindXyDetectBarCode',
     'pushApp/getQuotation' => 'index/pushApp/getQuotation',
     'pushApp/pullAppDetectToXyDetect' => 'index/pushApp/pullAppDetectToXyDetect',
+    'pushApp/getUniqueKey' => 'index/pushApp/getUniqueKey',
 ];

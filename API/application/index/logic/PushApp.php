@@ -36,6 +36,8 @@ class PushApp extends BaseLogic
     }
 
     /**
+     * 将App传入的IMEI码进行保存
+     *
      * @param $params
      * @return array|mixed
      */
@@ -51,6 +53,8 @@ class PushApp extends BaseLogic
     }
 
     /**
+     * 将App检测结果收录，并返回一个唯一存储ke
+     *
      * @param $params
      * @return array|mixed
      */
@@ -68,6 +72,8 @@ class PushApp extends BaseLogic
 
 
     /**
+     * 获取App传来的条形码，并将条码和存储key进行绑定
+     *
      * @param $params
      * @return array|mixed
      */
@@ -84,6 +90,8 @@ class PushApp extends BaseLogic
 
 
     /**
+     * 获取App传来的条形码，并将条码和存储key进行绑定
+     *
      * @param $params
      * @return array|mixed
      */
@@ -93,12 +101,14 @@ class PushApp extends BaseLogic
 
         $res = $this->InvokingServerApi($interface, $params);
 
-        $res = $res['_data'];
+        $res = $res;
 
         return $res;
     }
 
     /**
+     * 根据用户选项返回查询结果
+     *
      * @param $params
      * @return array|mixed
      */
@@ -115,6 +125,8 @@ class PushApp extends BaseLogic
 
 
     /**
+     * 根据用户选项返回查询结果
+     *
      * @param $params
      * @return array|mixed
      */
@@ -145,6 +157,8 @@ class PushApp extends BaseLogic
     }
 
     /**
+     * 返回app需要的唯一key
+     *
      * @param $params
      * @return array|mixed
      */

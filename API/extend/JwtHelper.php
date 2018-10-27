@@ -11,8 +11,10 @@ use app\common\exceptions\SystemException;
  *
  * @package App\Helper
  */
+define('APP_JWT_TOKEN', 'f9e1f536836454c37977c71f03560874');
 class JwtHelper
 {
+
 
     /**
      * @var array 标题通常由两部分组成：令牌的类型，即JWT和正在使用的散列算法，如HMAC SHA256或RSA。
