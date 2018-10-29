@@ -240,4 +240,13 @@ class PushApp extends BaseController
         }
     }
 
+
+    /**
+     *
+     */
+    public function pullPictureToCloud()
+    {
+
+    }
+
 }
