@@ -276,7 +276,6 @@ class PushApp extends BaseController
         if (!$validate->scene('analyseXyData')->check($params)) {
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
-        $this->checkLogin();
         $result = $this->logic->analyseXyData($params);
         \ResponseHelper::apiSuccess('操作成功', $result);
     }
