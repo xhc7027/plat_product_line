@@ -16,4 +16,5 @@ return [
     'pushApp/getQuotation' => 'index/pushApp/getQuotation',
     'pushApp/pullAppDetectToXyDetect' => 'index/pushApp/pullAppDetectToXyDetect',
     'pushApp/getUniqueKey' => 'index/pushApp/getUniqueKey',
+    'pushApp/analyseXyData' => 'index/pushApp/analyseXyData',
 ];

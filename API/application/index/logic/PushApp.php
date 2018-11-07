@@ -173,4 +173,22 @@ class PushApp extends BaseLogic
         return $res;
     }
 
+
+    /**
+     * 返回app需要的唯一key
+     *
+     * @param $params
+     * @return array|mixed
+     */
+    public function analyseXyData($params)
+    {
+        $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "AnalyseXyData";
+
+        $res = $this->InvokingServerApi($interface, $params);
+
+        $res = $res['_data'];
+
+        return $res;
+    }
+
 }

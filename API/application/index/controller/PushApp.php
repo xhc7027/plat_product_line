@@ -249,4 +249,37 @@ class PushApp extends BaseController
 
     }
 
+    /**
+     * 根据用户选项返回查询结果
+     */
+    public function SelectDetectInfo()
+    {
+        $params = $this->data['_param'];
+
+        $validate = new \app\index\validate\PushApp();
+        if (!$validate->scene('getQuotation')->check($params)) {
+            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
+        }
+        $this->checkLogin();
+        $result = $this->logic->SelectDetectInfo($params);
+        \ResponseHelper::apiSuccess('操作成功', $result);
+    }
+
+    /**
+     * 根据用户选项返回查询结果
+     */
+    public function analyseXyData()
+    {
+        $params = $this->data['_param'];
+
+        $validate = new \app\index\validate\PushApp();
+        if (!$validate->scene('analyseXyData')->check($params)) {
+            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
+        }
+        $this->checkLogin();
+        $result = $this->logic->analyseXyData($params);
+        \ResponseHelper::apiSuccess('操作成功', $result);
+    }
+
+
 }

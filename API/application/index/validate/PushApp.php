@@ -32,6 +32,7 @@ class PushApp extends PublicParams
         ],
         'getQuotation' => ['uniqueKey'],
         'saveIMEI' => ['imei'],
-        'bindDetectBarCode' => ['codeInfo']
+        'bindDetectBarCode' => ['codeInfo'],
+        'analyseXyData' => [''],
     ];
 }
