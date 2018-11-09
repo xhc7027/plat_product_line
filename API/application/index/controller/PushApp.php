@@ -170,9 +170,9 @@ class PushApp extends BaseController
         $url = config('params.xy_detect_api');
         $return = curlByPost($url . 'api/addDetRecord', $result);
         if ($return['_data']['_ret'] != 0) {
-            \ResponseHelper::apiFail(10001, '推送到闲鱼检测系统失败，请联系管理员', json_encode($return));
+            \ResponseHelper::apiFail(10001, '推送到闲鱼检测系统失败，闲鱼返回错误信息：' . $return['_data']['_errStr'], $return);
         }
-        \ResponseHelper::apiSuccess('推送到闲鱼检测系统成功', $return);
+        \ResponseHelper::apiSuccess('推送到闲鱼检测系统成功，闲鱼返回信息：'. $return['_data']['_errStr'], $return);
     }
 
     /**
