@@ -167,12 +167,11 @@ class PushApp extends BaseController
         }
         $this->checkLogin();
         $result = $this->logic->pullAppDetectToXyDetect($params);
-        $url = config('params.xy_detect_api');
-        $return = curlByPost($url . 'api/addDetRecord', $result);
-        if ($return['_data']['_ret'] != 0) {
-            \ResponseHelper::apiFail(10001, '推送到闲鱼检测系统失败，闲鱼返回错误信息：' . $return['_data']['_errStr'], $return);
+
+        if ($result['_data']['_ret'] != 0) {
+            \ResponseHelper::apiFail(10001, '推送到闲鱼检测系统失败，闲鱼返回错误信息：' . $result['_data']['_errStr'], $result);
         }
-        \ResponseHelper::apiSuccess('推送到闲鱼检测系统成功，闲鱼返回信息：'. $return['_data']['_errStr'], $return);
+        \ResponseHelper::apiSuccess('推送到闲鱼检测系统成功，闲鱼返回信息：'. $result['_data']['_errStr'], $result);
     }
 
     /**
