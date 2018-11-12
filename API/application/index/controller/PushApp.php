@@ -153,7 +153,6 @@ class PushApp extends BaseController
         \ResponseHelper::apiSuccess('操作成功', $result);
     }
 
-
     /**
      * 根据用户选项返回查询结果
      */
@@ -165,14 +164,15 @@ class PushApp extends BaseController
         if (!$validate->scene('getQuotation')->check($params)) {
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
-        $this->checkLogin();
-        $result = $this->logic->pullAppDetectToXyDetect($params);
-
-        if ($result['_data']['_ret'] != 0) {
-            \ResponseHelper::apiFail(10001, '推送到闲鱼检测系统失败，闲鱼返回错误信息：' . $result['_data']['_errStr'], $result);
+        $this->checkLogin();        $result = $this->logic->pullAppDetectToXyDetect($params);
+        if ($result['_data']['_ret'] !== '0') {
+            $error = json_decode($result['_data']['_errStr'],true);
+            \ResponseHelper::apiFail(10001, '推送到闲鱼检测系统失败，闲鱼返回错误信息：' . $error['error_str'], $result);
         }
-        \ResponseHelper::apiSuccess('推送到闲鱼检测系统成功，闲鱼返回信息：'. $result['_data']['_errStr'], $result);
+        \ResponseHelper::apiSuccess('推送到闲鱼检测系统成功', $result);
     }
+
+
 
     /**
      * 返回app需要的唯一key
