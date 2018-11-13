@@ -166,8 +166,7 @@ class PushApp extends BaseController
         }
         $this->checkLogin();        $result = $this->logic->pullAppDetectToXyDetect($params);
         if ($result['_data']['_ret'] !== '0') {
-            $error = json_decode($result['_data']['_errStr'],true);
-            \ResponseHelper::apiFail(10001, '推送到闲鱼检测系统失败，闲鱼返回错误信息：' . $error['error_str'], $result);
+            \ResponseHelper::apiFail(10001, '推送到闲鱼检测系统失败，闲鱼返回错误信息：' . $result['_data']['_errStr'], $result);
         }
         \ResponseHelper::apiSuccess('推送到闲鱼检测系统成功', $result);
     }
