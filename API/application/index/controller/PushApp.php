@@ -129,7 +129,11 @@ class PushApp extends BaseController
         }
         $this->checkLogin();
         $result = $this->logic->bindXyDetectBarCode($params);
-        if ($result['flag'] == 1) {
+        if (isset($result['_data']['_ret']) && $result['_data']['_ret'] !== '0') {
+            $error = json_decode($result['_data']['_errStr'], true);
+            \ResponseHelper::apiFail(1, $error['error_str']);
+        }
+        if (isset($result['flag']) && $result['flag'] == 1) {
             \ResponseHelper::apiFail(1, $result['_data']);
         }
 
@@ -164,13 +168,13 @@ class PushApp extends BaseController
         if (!$validate->scene('getQuotation')->check($params)) {
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
-        $this->checkLogin();        $result = $this->logic->pullAppDetectToXyDetect($params);
+        $this->checkLogin();
+        $result = $this->logic->pullAppDetectToXyDetect($params);
         if ($result['_data']['_ret'] !== '0') {
             \ResponseHelper::apiFail(10001, '推送到闲鱼检测系统失败，闲鱼返回错误信息：' . $result['_data']['_errStr'], $result);
         }
         \ResponseHelper::apiSuccess('推送到闲鱼检测系统成功', $result);
     }
-
 
 
     /**
