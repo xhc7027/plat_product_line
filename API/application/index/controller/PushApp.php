@@ -129,7 +129,11 @@ class PushApp extends BaseController
         }
         $this->checkLogin();
         $result = $this->logic->bindXyDetectBarCode($params);
-        if ($result['flag'] == 1) {
+        if (isset($result['_data']['_ret']) && $result['_data']['_ret'] !== '0') {
+            $error = json_decode($result['_data']['_errStr'], true);
+            \ResponseHelper::apiFail(1, $error['error_str']);
+        }
+        if (isset($result['flag']) && $result['flag'] == 1) {
             \ResponseHelper::apiFail(1, $result['_data']);
         }
 
@@ -153,7 +157,6 @@ class PushApp extends BaseController
         \ResponseHelper::apiSuccess('操作成功', $result);
     }
 
-
     /**
      * 根据用户选项返回查询结果
      */
@@ -167,13 +170,12 @@ class PushApp extends BaseController
         }
         $this->checkLogin();
         $result = $this->logic->pullAppDetectToXyDetect($params);
-        $url = config('params.xy_detect_api');
-        $return = curlByPost($url . 'api/addDetRecord', $result);
-        if ($return['_data']['_ret'] != 0) {
-            \ResponseHelper::apiFail(10001, '推送到闲鱼检测系统失败，请联系管理员', json_encode($return));
+        if ($result['_data']['_ret'] !== '0') {
+            \ResponseHelper::apiFail(10001, '推送到闲鱼检测系统失败，闲鱼返回错误信息：' . $result['_data']['_errStr'], $result);
         }
-        \ResponseHelper::apiSuccess('推送到闲鱼检测系统成功', $return);
+        \ResponseHelper::apiSuccess('推送到闲鱼检测系统成功', $result);
     }
+
 
     /**
      * 返回app需要的唯一key
@@ -239,5 +241,46 @@ class PushApp extends BaseController
             \ResponseHelper::apiFail(Code::LOGIN_ERROR, $result['body']['retinfo']);
         }
     }
+
+
+    /**
+     *
+     */
+    public function pullPictureToCloud()
+    {
+
+    }
+
+    /**
+     * 根据用户选项返回查询结果
+     */
+    public function SelectDetectInfo()
+    {
+        $params = $this->data['_param'];
+
+        $validate = new \app\index\validate\PushApp();
+        if (!$validate->scene('getQuotation')->check($params)) {
+            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
+        }
+        $this->checkLogin();
+        $result = $this->logic->SelectDetectInfo($params);
+        \ResponseHelper::apiSuccess('操作成功', $result);
+    }
+
+    /**
+     * 根据用户选项返回查询结果
+     */
+    public function analyseXyData()
+    {
+        $params = $this->data['_param'];
+
+        $validate = new \app\index\validate\PushApp();
+        if (!$validate->scene('analyseXyData')->check($params)) {
+            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
+        }
+        $result = $this->logic->analyseXyData($params);
+        \ResponseHelper::apiSuccess('操作成功', $result);
+    }
+
 
 }
