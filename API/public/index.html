@@ -1,1 +1,54 @@
-<!DOCTYPE html><html><head><title>Quasar App</title><meta charset=utf-8><meta name=description content="A Quasar Framework app"><meta name=format-detection content="telephone=no"><meta name=msapplication-tap-highlight content=no><meta name=viewport content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width"><link rel=icon href=statics/quasar-logo.png type=image/x-icon><link rel=icon type=image/png sizes=32x32 href=statics/icons/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=statics/icons/favicon-16x16.png><link as=style href=css/app.d640428a.css rel=preload><link as=script href=js/app.fc573d0.js rel=preload><link as=script href=js/runtime.ea100b1.js rel=preload><link as=script href=js/vendor.73a55d0.js rel=preload><link href=css/1.ff0a7848.css rel=prefetch><link href=css/2.c025c5ad.css rel=prefetch><link href=css/3.25c79ed8.css rel=prefetch><link href=css/4.ac994e7f.css rel=prefetch><link href=css/5.bb17140f.css rel=prefetch><link href=css/6.defd6dce.css rel=prefetch><link href=js/1.564dc50.js rel=prefetch><link href=js/2.0c4e358.js rel=prefetch><link href=js/3.3e084c7.js rel=prefetch><link href=js/4.da7dbff.js rel=prefetch><link href=js/5.40ea168.js rel=prefetch><link href=js/6.79dd3c1.js rel=prefetch><link href=js/7.d644c0c.js rel=prefetch><link href=css/app.d640428a.css rel=stylesheet></head><body><div id=q-app></div><script type=text/javascript src=js/app.fc573d0.js></script><script type=text/javascript src=js/vendor.73a55d0.js></script><script type=text/javascript src=js/runtime.ea100b1.js></script></body></html>
+  public static function resetXyDetectOption($sdConfig, $evaOption)
+    {
+        $optionIds = array_column($evaOption, 'id');
+        //foreach ($sdConfig as $k=>$v){
+        foreach ($sdConfig as $kk => $vv) {
+            foreach ($vv['childs'] as $kkk => $vvv) {
+                foreach ($evaOption as $u => $y) {
+                    if ($y['id'] == $vvv['id']) {
+                        $ansIds = array_column($evaOption[current(array_keys($optionIds, $vvv['id']))]['question'], 'id');
+                        if ($y['conftype'] === "1") {
+                            $sdConfig[$kk]['childs'][$kkk]['type'] = "sku";
+                        } else {
+                            $sdConfig[$kk]['childs'][$kkk]['type'] = "check";
+                        }
+                        foreach ($vvv['childs'] as $kkkk => $vvvv) {
+                            if (!in_array($vvvv['id'], $ansIds)) {
+                                unset($sdConfig[$kk]['childs'][$kkk]['childs'][$kkkk]);
+                            }
+                        }
+                        $sdConfig[$kk]['childs'][$kkk]['childs'] = array_values($sdConfig[$kk]['childs'][$kkk]['childs']);
+                        unset($optionIds[current(array_keys($optionIds, $vvv['id']))]);
+                    } else {
+                        unset($sdConfig[$kk]['childs'][$kkk]);
+                    }
+                }
+            }
+            $sdConfig[$kk]['childs'] = array_values($sdConfig[$kk]['childs']);
+        }
+//}
+
+        $evaOptionNew = array_filter($evaOption, function ($v) use ($optionIds) {
+            if (in_array($v['id'], $optionIds)) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+        $data = [];
+        foreach ($evaOptionNew as $k => $v) {
+            $data[$k] = [
+                'id' => $v['id'],
+                'name' => $v['name'],
+                'childs' => []
+            ];
+            foreach ($v['question'] as $kk => $vv) {
+                $data[$k]['childs'][] = [
+                    'id' => $vv['id'],
+                    'name' => $vv['name'],
+                ];
+            }
+        }
+        //todo 记得修改
+        return ['detectOptions' => $sdConfig, 'notAllocatOptions' => array_values($data)];
+    }

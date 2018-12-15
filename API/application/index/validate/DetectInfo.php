@@ -5,7 +5,7 @@ namespace app\index\validate;
 use think\Validate;
 use app\common\validate\PublicParams;
 
-class PushApp extends PublicParams
+class DetectInfo extends PublicParams
 {
     protected $rule = [
         'client' => 'require|integer', //手机操作系统	0：IOS，1：AOS
@@ -28,15 +28,8 @@ class PushApp extends PublicParams
         'info' => '机型不能为空',
     ];
     protected $scene = [
-        'saveAppDetectResult' => [
-            '_data.imei',
-        ],
-        'getQuotation' => ['uniqueKey'],
-        'saveIMEI' => ['imei'],
-        'bindDetectBarCode' => ['codeInfo'],
-        'analyseXyData' => [''],
-        'getUniqueKey' => [''],
-        'getDetectInfo' => [''],
-        'pushAppDetectResult' => [''],
+	'getDetectTimeData' => [''],
+        'exportDetectTimeData' => [''],
+	'getDetectTimeDetails' => [''],
     ];
 }

@@ -102,7 +102,7 @@ class PushApp extends BaseController
     /**
      * 获取App传来的条形码，并将条码和存储key进行绑定
      */
-    public function bindDetectBarCode()
+    public function bindCodeInfo()
     {
         $params = $this->data['_param'];
 
@@ -110,8 +110,7 @@ class PushApp extends BaseController
         if (!$validate->scene('bindDetectBarCode')->check($params)) {
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
-        $this->checkLogin();
-        $result = $this->logic->bindDetectBarCode($params);
+        $result = $this->logic->bindCodeInfo($params);
 
         \ResponseHelper::apiSuccess('操作成功', $result);
     }
@@ -127,7 +126,6 @@ class PushApp extends BaseController
         if (!$validate->scene('bindDetectBarCode')->check($params)) {
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
-        $this->checkLogin();
         $result = $this->logic->bindXyDetectBarCode($params);
         if (isset($result['_data']['_ret']) && $result['_data']['_ret'] !== '0') {
             $error = json_decode($result['_data']['_errStr'], true);
@@ -144,21 +142,21 @@ class PushApp extends BaseController
     /**
      * 根据用户选项返回查询结果
      */
-    public function getQuotation()
+    public function getDetectInfo()
     {
         $params = $this->data['_param'];
 
         $validate = new \app\index\validate\PushApp();
-        if (!$validate->scene('getQuotation')->check($params)) {
+        if (!$validate->scene('getDetectInfo')->check($params)) {
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
-        $this->checkLogin();
-        $result = $this->logic->getQuotation($params);
+        $result = $this->logic->getDetectInfo($params);
+        
         \ResponseHelper::apiSuccess('操作成功', $result);
     }
 
     /**
-     * 根据用户选项返回查询结果
+     * 将APP检测结果推送到闲鱼检测
      */
     public function pullAppDetectToXyDetect()
     {
@@ -186,8 +184,13 @@ class PushApp extends BaseController
 
         $validate = new \app\index\validate\PushApp();
         try {
-            $time = \JwtHelper::decode($params['token']);
-            if ($time <= date('Y-m-d H:i:s', '-1 day')) {
+            $Jwt = new \JwtHelper();
+            $time = $Jwt->decode($params['token']);
+            //$aaa = json_decode($time->data,true);
+            $time = $time->data->time;
+            $aaa = strtotime(date("Y-m-d H:i:s", strtotime("-1months")));
+            //var_dump($aaa);die;
+            if ((int)$time <= (int)$aaa) {
                 \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, '超过时间，请重新提交检测');
             }
         } catch (SystemException $e) {
@@ -198,7 +201,7 @@ class PushApp extends BaseController
         if (!$validate->scene('getUniqueKey')->check($params)) {
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
-        $result = $this->logic->getUniqueKey($params);
+        $result = $this->logic->getUniqueKey(['time' => $time]);
 
         \ResponseHelper::apiSuccess('操作成功', $result);
     }
@@ -243,13 +246,6 @@ class PushApp extends BaseController
     }
 
 
-    /**
-     *
-     */
-    public function pullPictureToCloud()
-    {
-
-    }
 
     /**
      * 根据用户选项返回查询结果
@@ -259,7 +255,7 @@ class PushApp extends BaseController
         $params = $this->data['_param'];
 
         $validate = new \app\index\validate\PushApp();
-        if (!$validate->scene('getQuotation')->check($params)) {
+        if (!$validate->scene('selectDetectInfo')->check($params)) {
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
         $this->checkLogin();
@@ -268,7 +264,23 @@ class PushApp extends BaseController
     }
 
     /**
-     * 根据用户选项返回查询结果
+     * 数据导出接口
+     */
+    public function DetectDataExport()
+    {
+        $params = $this->data['_param'];
+
+        $validate = new \app\index\validate\PushApp();
+        if (!$validate->scene('detectDataExport')->check($params)) {
+            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
+        }
+        $this->checkLogin();
+        $result = $this->logic->SelectDetectInfo($params);
+        \ResponseHelper::apiSuccess('操作成功', $result);
+    }
+
+    /**
+     * 分析闲鱼检测数据结果
      */
     public function analyseXyData()
     {
@@ -279,6 +291,22 @@ class PushApp extends BaseController
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
         $result = $this->logic->analyseXyData($params);
+        \ResponseHelper::apiSuccess('操作成功', $result);
+    }
+
+
+    /**
+     * 上报检测信息
+     */
+    public function pushAppDetectResult()
+    {
+        $params = $this->data['_param'];
+
+        $validate = new \app\index\validate\PushApp();
+        if (!$validate->scene('pushAppDetectResult')->check($params)) {
+            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
+        }
+        $result = $this->logic->pushAppDetectResult($params);
         \ResponseHelper::apiSuccess('操作成功', $result);
     }
 

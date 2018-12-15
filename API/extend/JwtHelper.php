@@ -1,7 +1,4 @@
 <?php
-
-use app\common\exceptions\SystemException;
-
 /**
  * JSON Web Token（JWT）是一种开放式标准（RFC 7519），它定义了一种紧凑且自包含的方式，用于在各方之间以JSON对象安全传输信息。这些信息可以通过数
  * 字签名进行验证和信任。可以使用秘密（使用HMAC算法）或使用RSA的公钥/私钥对对JWT进行签名。<br>
@@ -62,7 +59,7 @@ class JwtHelper
     {
         $this->payload['data'] = $data;
         $this->pretreatment();
-        $text = $this->ret . $this->key;
+        $text = $this->ret;
         return $this->ret .= '.' . $this->crypt($text);
     }
 
@@ -88,12 +85,12 @@ class JwtHelper
         //根据.分隔三段文本
         $parser = preg_split('/\./', $data);
         if (!$parser || count($parser) !== 3) {
-            throw new SystemException('原始数据格式错误');
+            throw new \Exception('原始数据格式错误');
         }
 
         //比对签名
-        if ($parser[2] !== $this->crypt($parser[0] . '.' . $parser[1] . $this->key)) {
-            throw new SystemException('签名错误');
+        if ($parser[2] !== $this->crypt($parser[0] . '.' . $parser[1])) {
+            throw new \Exception('签名错误');
         }
 
         //解析数据

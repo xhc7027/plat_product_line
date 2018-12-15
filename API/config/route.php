@@ -11,10 +11,18 @@ return [
     'pushApp/saveIMEI' => 'index/pushApp/saveIMEI',
     'pushApp/test' => 'index/pushApp/test',
     'pushApp/saveAppDetectResult' => 'index/pushApp/saveAppDetectResult',
-    'pushApp/bindDetectBarCode' => 'index/pushApp/bindDetectBarCode',
-    'pushApp/bindXyDetectBarCode' => 'index/pushApp/bindXyDetectBarCode',
+
+    'pushApp/bindCodeInfo' => 'index/pushApp/bindCodeInfo',
     'pushApp/getQuotation' => 'index/pushApp/getQuotation',
     'pushApp/pullAppDetectToXyDetect' => 'index/pushApp/pullAppDetectToXyDetect',
     'pushApp/getUniqueKey' => 'index/pushApp/getUniqueKey',
     'pushApp/analyseXyData' => 'index/pushApp/analyseXyData',
+    'pushApp/getDetectInfo' => 'index/pushApp/getDetectInfo',
+    'pushApp/pushAppDetectResult' => 'index/pushApp/pushAppDetectResult',
+
+
+    //数据统计
+    'detectInfo/getDetectTimeData' => 'index/detectInfo/getDetectTimeData',
+    
+    'detectInfo/exportDetectTimeData' => 'index/detectInfo/exportDetectTimeData',
 ];

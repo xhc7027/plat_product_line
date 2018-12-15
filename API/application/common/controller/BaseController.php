@@ -10,20 +10,23 @@ use app\common\lib\ErrorCode;
 
 class BaseController extends CommonController
 {
+    public $action = ['exportDetectTimeData'];
 
     public function _initialize(Request $request = null)
     {
         parent::_initialize($request);
 
         // 通过OPTION请求
-        if($this->request->isOptions()) {
+        if ($this->request->isOptions()) {
             $header = ['Access-Control-Allow-Headers' => 'x-requested-with,content-type', 'Access-Control-Allow-Origin' => '*'];
             $response = \think\Response::create('', 'json', 200, $header);
             throw new \think\exception\HttpResponseException($response);
         }
+        $request = \think\Request::instance();
+        $requestAction = $request->action();
 
         //验证公共参数
-        if (true !== ($validate = $this->validate($this->data, 'PublicParams'))) {
+        if (!in_array($requestAction, $this->action) && true !== ($validate = $this->validate($this->data, 'PublicParams'))) {
             //throw new HttpException(404, $validate);
             abort(404, $validate);
         }
@@ -45,8 +48,8 @@ class BaseController extends CommonController
     {
         $params = $this->data['_param'];
         $data = [
-            'login_token'     => $params['login_token'],
-            'login_user_id'   => $params['login_user_id'],
+            'login_token' => $params['login_token'],
+            'login_user_id' => $params['login_user_id'],
             'login_system_id' => '51',
         ];
         $params = rpcParamsArr('checklogin', $data);

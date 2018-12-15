@@ -70,16 +70,15 @@ class PushApp extends BaseLogic
     }
 
 
-
     /**
      * 获取App传来的条形码，并将条码和存储key进行绑定
      *
      * @param $params
      * @return array|mixed
      */
-    public function bindDetectBarCode($params)
+    public function bindCodeInfo($params)
     {
-        $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "GetProfessionDetect";
+        $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "BindCodeAndUniqueKey";
 
         $res = $this->InvokingServerApi($interface, $params);
 
@@ -112,9 +111,9 @@ class PushApp extends BaseLogic
      * @param $params
      * @return array|mixed
      */
-    public function getQuotation($params)
+    public function getDetectInfo($params)
     {
-        $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "PushEngineerDetectResult";
+        $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "getDetectInfo";
 
         $res = $this->InvokingServerApi($interface, $params);
 
@@ -125,7 +124,7 @@ class PushApp extends BaseLogic
 
 
     /**
-     * 根据用户选项返回查询结果
+     * 将APP检测结果推送到闲鱼检测
      *
      * @param $params
      * @return array|mixed
@@ -142,6 +141,7 @@ class PushApp extends BaseLogic
     }
 
     /**
+     * 获取检测数据
      * @param $params
      * @return array|mixed
      */
@@ -164,7 +164,7 @@ class PushApp extends BaseLogic
      */
     public function getUniqueKey($params)
     {
-        $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "getUniqueKey";
+        $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "GetUniqueKey";
 
         $res = $this->InvokingServerApi($interface, $params);
 
@@ -190,5 +190,41 @@ class PushApp extends BaseLogic
 
         return $res;
     }
+
+
+    /**
+     * 查询结果返回列表
+     * @param $params
+     * @return array|mixed
+     */
+    public function SelectDetectInfo($params)
+    {
+        $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "SelectDetectInfo";
+
+        $res = $this->InvokingServerApi($interface, $params);
+
+        $res = $res['_data'];
+
+        return $res;
+    }
+
+
+    /**
+     * 上报检测信息
+     * @param $params
+     * @return array|mixed
+     */
+    public function pushAppDetectResult($params)
+    {
+        $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "PushAppDetectResult";
+
+        $res = $this->InvokingServerApi($interface, $params);
+
+        $res = $res['_data'];
+
+        return $res;
+    }
+
+
 
 }
