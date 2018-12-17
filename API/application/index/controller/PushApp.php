@@ -110,6 +110,7 @@ class PushApp extends BaseController
         if (!$validate->scene('bindDetectBarCode')->check($params)) {
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
+        $this->checkLogin();
         $result = $this->logic->bindCodeInfo($params);
 
         \ResponseHelper::apiSuccess('操作成功', $result);
@@ -151,7 +152,7 @@ class PushApp extends BaseController
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
         $result = $this->logic->getDetectInfo($params);
-        
+
         \ResponseHelper::apiSuccess('操作成功', $result);
     }
 

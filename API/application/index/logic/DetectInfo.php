@@ -88,7 +88,7 @@ class DetectInfo extends BaseLogic
             'sid' => '序号',
             'codeInfo' => '机身条码',
             'uniqueKey' => '检测条码',
-            'souceDetct' => '业务方',
+            'sourceDetect' => '业务方',
             'orderId' => '订单号',
             'detectId' => '检测单号',
             'userName' => '检测人员',
@@ -119,7 +119,7 @@ class DetectInfo extends BaseLogic
             $res[$k]['sid'] = $k + 1;
             $res[$k]['codeInfo'] = $v['codeInfo'] ?? ' ';
             $res[$k]['uniqueKey'] = $v['uniqueKey'] ?? ' ';
-            $res[$k]['souceDetct'] = $v['souceDetct'] ?? ' ';
+            $res[$k]['sourceDetect'] = $v['sourceDetect'] ?? ' ';
             $res[$k]['orderId'] = $v['orderId'] ?? ' ';
             $res[$k]['detectId'] = $v['detectId'] ?? ' ';
             $res[$k]['userName'] = $v['userName'] ?? ' ';

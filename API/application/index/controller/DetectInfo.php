@@ -37,6 +37,7 @@ class DetectInfo extends BaseController
         if (!$validate->scene('getDetectTimeData')->check($params)) {
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }*/
+        $this->checkLogin();
         $result = $this->logic->getDetectTimeData($params);
 
 	$result = (array)$result;
@@ -72,5 +73,28 @@ class DetectInfo extends BaseController
         $result = $this->logic->getDetectTimeDetails($params);
 
         \ResponseHelper::apiSuccess('操作成功', $result);
+    }
+
+
+    /**
+     * 验证登录token
+     */
+    protected function checkLogin()
+    {
+        $params = $this->data['_param'];
+        if (!isset($params['login_token']) || !isset($params['login_user_id'])) {
+            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, '所传数据没有token和user_id');
+        }
+        $data = [
+            'login_token' => $params['login_token'],
+            'login_user_id' => $params['login_user_id'],
+            'login_system_id' => '51',
+        ];
+        $params = rpcParamsArr('checklogin', $data);
+
+        $result = curlByPost(config('params.check_login'), $params);
+        if (0 != $result['body']['ret']) {
+            \ResponseHelper::apiFail(Code::LOGIN_ERROR, $result['body']['retinfo']);
+        }
     }
 }

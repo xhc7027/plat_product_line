@@ -25,4 +25,5 @@ return [
     'detectInfo/getDetectTimeData' => 'index/detectInfo/getDetectTimeData',
     
     'detectInfo/exportDetectTimeData' => 'index/detectInfo/exportDetectTimeData',
+    'detectInfo/getDetectTimeDetails' => 'index/detectInfo/getDetectTimeDetails'
 ];
