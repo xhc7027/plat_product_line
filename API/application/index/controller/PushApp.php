@@ -152,8 +152,11 @@ class PushApp extends BaseController
             \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
         }
         $result = $this->logic->getDetectInfo($params);
-
-        \ResponseHelper::apiSuccess('操作成功', $result);
+        if (isset($result['isBinded']) && $result['isBinded'] === 0) {
+            \ResponseHelper::apiSuccess('还未拿到绑定数据，请重试', $result);
+        } else {
+            \ResponseHelper::apiSuccess('操作成功', $result);
+        }
     }
 
     /**
@@ -245,7 +248,6 @@ class PushApp extends BaseController
             \ResponseHelper::apiFail(Code::LOGIN_ERROR, $result['body']['retinfo']);
         }
     }
-
 
 
     /**

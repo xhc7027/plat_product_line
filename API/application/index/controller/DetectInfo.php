@@ -40,7 +40,7 @@ class DetectInfo extends BaseController
         $this->checkLogin();
         $result = $this->logic->getDetectTimeData($params);
 
-	$result = (array)$result;
+        $result = (array)$result;
         \ResponseHelper::apiSuccess('操作成功', $result);
     }
 
@@ -96,5 +96,22 @@ class DetectInfo extends BaseController
         if (0 != $result['body']['ret']) {
             \ResponseHelper::apiFail(Code::LOGIN_ERROR, $result['body']['retinfo']);
         }
+    }
+
+
+    /**
+     * 获取工程师检测平均时效
+     */
+    public function getEngineerDetectTime()
+    {
+        $params = $this->data['_param'];
+
+        $validate = new \app\index\validate\DetectInfo();
+        if (!$validate->scene('getEngineerDetectTime')->check($params)) {
+            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
+        }
+        $result = $this->logic->getEngineerDetectTime($params);
+
+        \ResponseHelper::apiSuccess('操作成功', $result);
     }
 }
