@@ -25,5 +25,6 @@ return [
     'detectInfo/getDetectTimeData' => 'index/detectInfo/getDetectTimeData',
     
     'detectInfo/exportDetectTimeData' => 'index/detectInfo/exportDetectTimeData',
-    'detectInfo/getDetectTimeDetails' => 'index/detectInfo/getDetectTimeDetails'
+    'detectInfo/getDetectTimeDetails' => 'index/detectInfo/getDetectTimeDetails',
+    'detectInfo/getEngineerDetectTime' => 'index/detectInfo/getEngineerDetectTime'
 ];

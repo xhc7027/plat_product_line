@@ -31,5 +31,6 @@ class DetectInfo extends PublicParams
 	'getDetectTimeData' => [''],
         'exportDetectTimeData' => [''],
 	'getDetectTimeDetails' => [''],
+	'getEngineerDetectTime' => [''],
     ];
 }
