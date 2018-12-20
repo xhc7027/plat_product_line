@@ -95,6 +95,7 @@ class ResponseHelper
         empty($data) && $data = new \stdClass();
 
         $interface = !is_null(request()) && request()->param() && request()->param()['_head']['_interface'] ? request()->param()['_head']['_interface'] : '';
+        $errcode = substr($errcode,3,6);
         $result = [
             '_head' => [
                 '_interface' => $interface,
