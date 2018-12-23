@@ -26,5 +26,9 @@ return [
     
     'detectInfo/exportDetectTimeData' => 'index/detectInfo/exportDetectTimeData',
     'detectInfo/getDetectTimeDetails' => 'index/detectInfo/getDetectTimeDetails',
-    'detectInfo/getEngineerDetectTime' => 'index/detectInfo/getEngineerDetectTime'
+    'detectInfo/getEngineerDetectTime' => 'index/detectInfo/getEngineerDetectTime',
+
+    //MQTT连接
+    'connectMQTT/registerDevice' => 'index/connectMQTT/getEngineerDetectTime',
+
 ];
