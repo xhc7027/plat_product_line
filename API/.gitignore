@@ -1,6 +1,0 @@
-.idea
-composer.lock
-*.log
-
-public/excel/*.csv
-runtime/
