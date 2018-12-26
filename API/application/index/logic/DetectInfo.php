@@ -116,7 +116,7 @@ class DetectInfo extends BaseLogic
     {
         //判断是否含有list
         if (!isset($data['list'])) {
-            $data['list'] = [];
+            $data['list'][0] = [];
         }
         $res = [];
         foreach ($data['list'] as $k => $v) {
@@ -129,7 +129,8 @@ class DetectInfo extends BaseLogic
             $res[$k]['userName'] = isset($v['userName']) && $v['userName'] ? $v['userName'] : ' ';
             $res[$k]['detectBeginTime'] = isset($v['detectStartTime']) && $v['detectStartTime'] ? $v['detectStartTime'] : ' ';
             $res[$k]['detectEndTime'] = isset($v['detectEndTime']) && $v['detectEndTime'] ? $v['detectEndTime'] : ' ';
-            $res[$k]['totalDetectTime'] = (int)strtotime($v['detectEndTime']) - (int)strtotime($v['detectStartTime']);
+            $res[$k]['totalDetectTime'] = isset($v['detectEndTime']) && isset($v['detectStartTime']) ?
+                (int)strtotime($v['detectEndTime']) - (int)strtotime($v['detectStartTime']) : '';
         }
         return $res;
     }
