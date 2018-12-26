@@ -114,17 +114,21 @@ class DetectInfo extends BaseLogic
      */
     public static function collatingSumSourceDataExcel(array $data)
     {
+        //判断是否含有list
+        if (!isset($data['list'])) {
+            $data['list'] = [];
+        }
         $res = [];
         foreach ($data['list'] as $k => $v) {
             $res[$k]['sid'] = $k + 1;
-            $res[$k]['codeInfo'] = $v['codeInfo'] ?? ' ';
-            $res[$k]['uniqueKey'] = $v['uniqueKey'] ?? ' ';
-            $res[$k]['sourceDetect'] = $v['sourceDetect'] ?? ' ';
-            $res[$k]['orderId'] = $v['orderId'] ?? ' ';
-            $res[$k]['detectId'] = $v['detectId'] ?? ' ';
-            $res[$k]['userName'] = $v['userName'] ?? ' ';
-            $res[$k]['detectBeginTime'] = $v['detectStartTime'] ?? ' ';
-            $res[$k]['detectEndTime'] = $v['detectEndTime'] ?? ' ';
+            $res[$k]['codeInfo'] = isset($v['codeInfo']) && $v['codeInfo'] ? $v['codeInfo'] : ' ';
+            $res[$k]['uniqueKey'] = isset($v['uniqueKey']) && $v['uniqueKey'] ? $v['uniqueKey'] : ' ';
+            $res[$k]['sourceDetect'] = isset($v['sourceDetect']) && $v['sourceDetect'] ? $v['sourceDetect'] : ' ';
+            $res[$k]['orderId'] = isset($v['orderId']) && $v['orderId'] ? $v['orderId'] : ' ';
+            $res[$k]['detectId'] = isset($v['detectId']) && $v['detectId'] ? $v['detectId'] : ' ';
+            $res[$k]['userName'] = isset($v['userName']) && $v['userName'] ? $v['userName'] : ' ';
+            $res[$k]['detectBeginTime'] = isset($v['detectStartTime']) && $v['detectStartTime'] ? $v['detectStartTime'] : ' ';
+            $res[$k]['detectEndTime'] = isset($v['detectEndTime']) && $v['detectEndTime'] ? $v['detectEndTime'] : ' ';
             $res[$k]['totalDetectTime'] = (int)strtotime($v['detectEndTime']) - (int)strtotime($v['detectStartTime']);
         }
         return $res;
