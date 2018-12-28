@@ -19,7 +19,7 @@ use think\Env;
 
 class ConnectMQTT extends BaseLogic
 {
-    public function registerDevice()
+    public function registerDevice($params)
     {
         $interface = Env::get('app.HSB_PRE_CONNECT_MQTT_API_INTERFACE') . "registerDevice";
 

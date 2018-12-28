@@ -152,4 +152,21 @@ class DetectInfo extends BaseLogic
 
         return $res;
     }
+
+    /**
+     * 获取工程师检测平均时效
+     *
+     * @param $params
+     * @return array|mixed
+     */
+    public function pullXianYuDetectTime($params)
+    {
+        $interface = Env::get('app.HSB_PRE_DETECT_DATA_API_INTERFACE') . "pullXianYuDetectTime";
+
+        $res = $this->InvokingServerApi($interface, $params);
+
+        $res = $res['_data'];
+
+        return $res;
+    }
 }

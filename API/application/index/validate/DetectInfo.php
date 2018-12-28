@@ -28,9 +28,10 @@ class DetectInfo extends PublicParams
         'info' => '机型不能为空',
     ];
     protected $scene = [
-	'getDetectTimeData' => [''],
+        'getDetectTimeData' => [''],
         'exportDetectTimeData' => [''],
-	'getDetectTimeDetails' => [''],
-	'getEngineerDetectTime' => [''],
+        'getDetectTimeDetails' => [''],
+        'getEngineerDetectTime' => [''],
+        'pullXianYuDetectTime' => [''],
     ];
 }

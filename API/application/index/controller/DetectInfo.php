@@ -114,4 +114,20 @@ class DetectInfo extends BaseController
 
         \ResponseHelper::apiSuccess('操作成功', $result);
     }
+
+    /**
+     * 获取工程师检测平均时效
+     */
+    public function pullXianYuDetectTime()
+    {
+        $params = $this->data['_param'];
+
+        $validate = new \app\index\validate\DetectInfo();
+        if (!$validate->scene('pullXianYuDetectTime')->check($params)) {
+            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
+        }
+        $result = $this->logic->pullXianYuDetectTime($params);
+
+        \ResponseHelper::apiSuccess('操作成功', $result);
+    }
 }

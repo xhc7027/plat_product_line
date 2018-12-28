@@ -23,12 +23,13 @@ return [
 
     //数据统计
     'detectInfo/getDetectTimeData' => 'index/detectInfo/getDetectTimeData',
-    
+
     'detectInfo/exportDetectTimeData' => 'index/detectInfo/exportDetectTimeData',
     'detectInfo/getDetectTimeDetails' => 'index/detectInfo/getDetectTimeDetails',
     'detectInfo/getEngineerDetectTime' => 'index/detectInfo/getEngineerDetectTime',
+    'detectInfo/pullXianYuDetectTime' => 'index/detectInfo/pullXianYuDetectTime',
 
     //MQTT连接
-    'connectMQTT/registerDevice' => 'index/connectMQTT/getEngineerDetectTime',
+    'connectMQTT/registerDevice' => 'index/connectMQTT/registerDevice',
 
 ];
