@@ -10,7 +10,7 @@ use app\common\lib\ErrorCode;
 
 class BaseController extends CommonController
 {
-    public $action = ['exportDetectTimeData'];
+    public $action = ['exportDetectTimeData', 'exportMachineDetectList'];
 
     public function _initialize(Request $request = null)
     {

@@ -62,6 +62,9 @@ class DetectInfo extends BaseController
     }
 
 
+    /**
+     * 获取检测详情时效
+     */
     public function getDetectTimeDetails()
     {
         $params = $this->data['_param'];
@@ -129,5 +132,53 @@ class DetectInfo extends BaseController
         $result = $this->logic->pullXianYuDetectTime($params);
 
         \ResponseHelper::apiSuccess('操作成功', $result);
+    }
+
+    /**
+     * 获取机台检测时效列表
+     */
+    public function getMachineDetectList()
+    {
+        $params = $this->data['_param'];
+
+        $validate = new \app\index\validate\DetectInfo();
+        if (!$validate->scene('getMachineDetectList')->check($params)) {
+            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
+        }
+        $result = $this->logic->getMachineDetectList($params);
+
+        \ResponseHelper::apiSuccess('操作成功', $result);
+    }
+
+
+    /**
+     * 获取机台检测时效列表
+     */
+    public function getMachineDetectDetails()
+    {
+        $params = $this->data['_param'];
+
+        $validate = new \app\index\validate\DetectInfo();
+        if (!$validate->scene('getMachineDetectDetails')->check($params)) {
+            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
+        }
+        $result = $this->logic->getMachineDetectDetails($params);
+
+        \ResponseHelper::apiSuccess('操作成功', $result);
+    }
+
+
+    public function exportMachineDetectList()
+    {
+        $params = $this->request->get();
+//        $params = $this->data['_param'];
+//
+//        $validate = new \app\index\validate\DetectInfo();
+//        if (!$validate->scene('exportDetectTimeData')->check($params)) {
+//            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
+//        }
+        $result = $this->logic->exportMachineDetectList($params);
+
+        return $result;
     }
 }

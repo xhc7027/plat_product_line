@@ -38,5 +38,6 @@ class PushApp extends PublicParams
         'getUniqueKey' => [''],
         'getDetectInfo' => [''],
         'pushAppDetectResult' => [''],
+        'pushMachineDetect' => [''],
     ];
 }

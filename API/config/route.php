@@ -19,6 +19,7 @@ return [
     'pushApp/analyseXyData' => 'index/pushApp/analyseXyData',
     'pushApp/getDetectInfo' => 'index/pushApp/getDetectInfo',
     'pushApp/pushAppDetectResult' => 'index/pushApp/pushAppDetectResult',
+    'pushApp/pushMachineDetect' => 'index/pushApp/pushMachineDetect',
 
 
     //数据统计
@@ -28,6 +29,9 @@ return [
     'detectInfo/getDetectTimeDetails' => 'index/detectInfo/getDetectTimeDetails',
     'detectInfo/getEngineerDetectTime' => 'index/detectInfo/getEngineerDetectTime',
     'detectInfo/pullXianYuDetectTime' => 'index/detectInfo/pullXianYuDetectTime',
+    'detectInfo/getMachineDetectList' => 'index/detectInfo/getMachineDetectList',
+    'detectInfo/getMachineDetectDetails' => 'index/detectInfo/getMachineDetectDetails',
+    'detectInfo/exportMachineDetectList' => 'index/detectInfo/exportMachineDetectList',
 
     //MQTT连接
     'connectMQTT/registerDevice' => 'index/connectMQTT/registerDevice',

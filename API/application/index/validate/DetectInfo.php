@@ -33,5 +33,8 @@ class DetectInfo extends PublicParams
         'getDetectTimeDetails' => [''],
         'getEngineerDetectTime' => [''],
         'pullXianYuDetectTime' => [''],
+        'getMachineDetectList' => [''],
+        'getMachineDetectDetails' => [''],
+        'exportMachineDetectList' => [''],
     ];
 }

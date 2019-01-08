@@ -54,8 +54,8 @@ class ResponseHelper
             empty($data) && $data = [];
         }
         $interface = !is_null(request()) && request()->param() && request()->param()['_head']['_interface'] ? request()->param()['_head']['_interface'] : '';
-	
-	$redata = array_merge(['_errCode' => '0','_errStr' => $msg,],$data);
+
+        $redata = array_merge(['_errCode' => '0', '_errStr' => $msg,], $data);
 
 
         $result = [
@@ -65,9 +65,9 @@ class ResponseHelper
                 '_remark' => '',
                 '_version' => '0.01'
             ],
-            '_data' =>$redata
+            '_data' => $redata
         ];
-	
+
         ArrayHelper::intToString($result);
         LogHelper::requestRecord($result);
 
@@ -95,7 +95,7 @@ class ResponseHelper
         empty($data) && $data = new \stdClass();
 
         $interface = !is_null(request()) && request()->param() && request()->param()['_head']['_interface'] ? request()->param()['_head']['_interface'] : '';
-        $errcode = substr($errcode,3,6);
+        $errcode = substr($errcode, 3, 6);
         $result = [
             '_head' => [
                 '_interface' => $interface,

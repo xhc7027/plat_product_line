@@ -227,4 +227,22 @@ class PushApp extends BaseLogic
 
 
 
+    /**
+     * 机台上报检测信息
+     * @param $params
+     * @return array|mixed
+     */
+    public function pushMachineDetect($params)
+    {
+        $interface = Env::get('app.HSB_PRE_DETECT_API_INTERFACE') . "pushMachineDetect";
+
+        $res = $this->InvokingServerApi($interface, $params);
+
+        $res = $res['_data'];
+
+        return $res;
+    }
+
+
+
 }

@@ -314,4 +314,20 @@ class PushApp extends BaseController
     }
 
 
+    /**
+     * 机台上报检测信息
+     */
+    public function pushMachineDetect()
+    {
+        $params = $this->data['_param'];
+
+        $validate = new \app\index\validate\PushApp();
+        if (!$validate->scene('pushMachineDetect')->check($params)) {
+            \ResponseHelper::apiFail(ErrorCode::PARAM_ERROR, $validate->getError());
+        }
+        $result = $this->logic->pushMachineDetect($params);
+        \ResponseHelper::apiSuccess('操作成功', $result);
+    }
+
+
 }
