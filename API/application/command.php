@@ -10,6 +10,6 @@
 // +----------------------------------------------------------------------
 
 return [
-	'app\common\command\getOMSDetectRecord',
-	'app\common\command\SaveCloudDetectToSync',
+	'app\common\command\deleteDeviceName',
+
 ];

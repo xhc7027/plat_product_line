@@ -232,6 +232,7 @@ class DetectInfo extends BaseLogic
             'sid' => '序号',
             'codeInfo' => '机身条码',
             'uniqueKey' => '检测条码',
+            'sourceDetect' => '业务方',
             'machineNum' => '机台编号',
             'detectBeginTime' => '检测开始时间',
             'detectEndTime' => '检测结束时间',
@@ -263,6 +264,7 @@ class DetectInfo extends BaseLogic
         foreach ($data['list'] as $k => $v) {
             $res[$k]['sid'] = $k + 1;
             $res[$k]['codeInfo'] = isset($v['codeInfo']) && $v['codeInfo'] ? $v['codeInfo'] : ' ';
+            $res[$k]['sourceDetect'] = isset($v['sourceDetect'])  ? $v['sourceDetect'] : ' 闲鱼 ';
             $res[$k]['uniqueKey'] = isset($v['uniqueKey']) && $v['uniqueKey'] ? $v['uniqueKey'] : ' ';
             $res[$k]['machineNum'] = isset($v['machineNum']) && $v['machineNum'] ? $v['machineNum'] : ' ';
             $res[$k]['detectBeginTime'] = isset($v['detectStartTime']) && $v['detectStartTime'] ? $v['detectStartTime'] : ' ';

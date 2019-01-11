@@ -19,6 +19,12 @@ use think\Env;
 
 class ConnectMQTT extends BaseLogic
 {
+    /**
+     * 设备注册
+     *
+     * @param $params
+     * @return array|mixed
+     */
     public function registerDevice($params)
     {
         $interface = Env::get('app.HSB_PRE_CONNECT_MQTT_API_INTERFACE') . "registerDevice";
@@ -30,4 +36,21 @@ class ConnectMQTT extends BaseLogic
         return $res;
     }
 
+
+    /**
+     * 定时脚本任务删除设备
+     *
+     * @param $params
+     * @return array|mixed
+     */
+    public function deleteDeviceName()
+    {
+        $interface = Env::get('app.HSB_PRE_CONNECT_MQTT_API_INTERFACE') . "deleteDeviceName";
+
+        $res = $this->InvokingServerApi($interface);
+
+        $res = $res['_data'];
+
+        return $res;
+    }
 }
